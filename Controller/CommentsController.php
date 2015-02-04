@@ -19,6 +19,18 @@ class CommentsController extends AppController {
 			}
 		}
 	}
+	
+	function edit($id = NULL) {
+		if(empty($this->data)) {
+			$this->request->data = $this->Comment->findById($id);
+		} else {
+			if($this->Comment->save($this->data)) {
+				$this->Comment->saveField("status","enabled");
+				$this->Session->setFlash('To comment ananeothike');
+				$this->redirect(array('action' => 'index', $id));
+			}
+		}
+	}
 }
 
 

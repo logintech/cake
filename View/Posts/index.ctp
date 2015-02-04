@@ -1,22 +1,34 @@
 <h1>Blog posts</h1>
-<table>
-    <tr>
-        <th>Id</th>
-        <th>Title</th>
-        <th>Created</th>
-    </tr>
 
-    <!-- Here is where we loop through our $posts array, printing out post info -->
+<table>
 
     <?php foreach ($posts as $post): ?>
-    <tr>
-        <td><?php echo $post['Post']['id']; ?></td>
-        <td>
-            <?php echo $this->Html->link($post['Post']['title'],array('controller' => 'posts', 'action' => 'view', $post['Post']['id'])); ?>
-        </td>
-        <td><?php echo $post['Post']['created'];
-		?></td>
-    </tr>
+		<tr>
+			<td>
+				<?php echo "<b>".$post['Post']['title'] ."</b> (".$post['Post']['created'].")"; ?>
+				<br/>
+				<?php echo $post['Post']['body']; ?>
+			</td>
+		</tr>
+		
+		<tr>
+			<td>
+				<?php foreach ($post['Comment'] as $comment): ?>
+				<?php if ($comment['status'] == 'enabled') {?>
+					<?php echo $comment['comment']; ?><br/>
+					Posted By: <?php echo $comment['name']; ?> At <?php echo $comment['created']; ?><br/><br/>
+					<?php } ?>
+				<?php endforeach; ?>
+			</td>
+		</tr>
+			<tr><td><?php echo $this->html->link('Eisagogh Sxoliou', array('controller'=>'comments', 'action'=>'add', $post['Post']['id']));
+			
+
+			?>
+			
+			</td></tr>
+
+			<tr><td><hr></td></tr>
     <?php endforeach; ?>
     <?php unset($post); ?>
 </table>
